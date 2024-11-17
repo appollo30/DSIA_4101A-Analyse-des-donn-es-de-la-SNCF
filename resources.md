@@ -7,3 +7,4 @@
 <https://www.tablesgenerator.com/markdown_tables#>
 <https://pandas.pydata.org/docs/reference/api/pandas.concat.html>
 <https://www.geeksforgeeks.org/adding-new-column-to-existing-dataframe-in-pandas/>
+<https://github.com/plotly/plotly.py/issues/4278>
