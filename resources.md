@@ -9,3 +9,4 @@
 <https://www.geeksforgeeks.org/adding-new-column-to-existing-dataframe-in-pandas/>
 <https://github.com/plotly/plotly.py/issues/4278>
 <https://plotly.com/python/bar-charts/#stacked-vs-grouped-bars>
+<https://coolors.co/>
