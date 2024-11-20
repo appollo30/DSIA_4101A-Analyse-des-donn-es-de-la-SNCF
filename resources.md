@@ -10,3 +10,4 @@
 <https://github.com/plotly/plotly.py/issues/4278>
 <https://plotly.com/python/bar-charts/#stacked-vs-grouped-bars>
 <https://coolors.co/>
+<https://stackoverflow.com/questions/19602931/basic-http-file-downloading-and-saving-to-disk-in-python>
