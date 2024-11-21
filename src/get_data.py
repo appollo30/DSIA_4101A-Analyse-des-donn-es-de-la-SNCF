@@ -45,9 +45,12 @@ def download_all_files():
         sources = json.load(sources_file) # Liste des sources à télécharger
 
     for source in sources:
+        name = source["name"]
+        url = source["url"]
         t1 = time.time()
-        download_file(source["url"], source["name"])
-        print("Le fichier " + source["name"] + " a été téléchargé avec succès (" + str(round(time.time()-t1,3)) + "s)")
+        download_file(url, name)
+        t2 = time.time()
+        print(f"Le fichier {name} a été téléchargé avec succès ({round(t2-t1,3)}s)")
         time.sleep(1/10)
 
 if __name__ == "__main__":
