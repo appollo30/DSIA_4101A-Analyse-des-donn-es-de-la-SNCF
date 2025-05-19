@@ -47,3 +47,43 @@ def process_speeds(speeds_df : pd.DataFrame, ignore_na=True) -> pd.DataFrame:
     # On renomme les colonnes pkd et pkf en pk_debut_r et pk_fin_r pour être cohérent avec le fichier shapes
     speeds_df_processed = speeds_df_processed.rename(columns={"pkd":"pk_debut_r","pkf":"pk_fin_r"})
     return speeds_df_processed
+
+def process_frequentations(frequentations_df : pd.DataFrame) -> pd.DataFrame:
+    """
+    Voir notebooks/4_frequentation_gares.ipynb
+    Traitement des données de fréquentation des gares.
+    
+    La transformation consiste à passer d'un format large, où chaque année est une colonne distincte, 
+    à un format long, où chaque année est une ligne distincte. Cela facilite les comparaisons et l'analyse 
+    des données sur plusieurs années.
+    """
+    years = [str(year) for year in range(2015, 2024)]
+    frequentations_df_processed = pd.DataFrame()
+    for year in years:
+        year_df = frequentations_df[["Nom de la gare", "Code UIC", "Code postal", "Segmentation DRG", f"Total Voyageurs {year}", f"Total Voyageurs + Non voyageurs {year}"]]
+        year_df = year_df.assign(Année=year) # On peut faire year_df["Année"] = year mais c'est moins propre, on a le warning SettingWithCopyWarning.
+        year_df = year_df.rename(columns={f"Total Voyageurs {year}":"Total Voyageurs", f"Total Voyageurs + Non voyageurs {year}":"Total Voyageurs + Non Voyageurs"})
+        frequentations_df_processed = pd.concat([frequentations_df_processed, year_df])
+    frequentations_df_processed = frequentations_df_processed.sort_values(by=["Nom de la gare", "Année"]) # On trie par nom de gare et année pour avoir un affichage plus lisible
+    frequentations_df_processed = frequentations_df_processed.drop(columns=["Code UIC", "Code postal"])
+    frequentations_df_processed = frequentations_df_processed.drop(columns=["Nom de la gare"])
+    frequentations_df_processed = frequentations_df_processed.reset_index(drop=True)
+    return frequentations_df_processed
+
+def process_gares(gares_df):
+    """
+    Voir notebooks/5_liste_gares.ipynb
+    Traitement des données de la liste des gares françaises.
+    On ne garde que les gares qui sont ouvertes aux voyageurs et qui sont exploitées par la SNCF.
+    """
+    gares_processed_df = gares_df.query("voyageurs == 'O'")
+    gares_processed_df = gares_processed_df.drop(columns=["voyageurs"])
+    gares_processed_df = gares_processed_df.reset_index(drop=True)
+    gares_processed_df["fret"] = gares_processed_df["fret"].apply(lambda x: x == "O") # Par défaut, la colonne fret est un object, on la convertit en booléen
+    # fret contient des valeurs "O" et "N", on les remplace par True et False
+
+    # On ne garde que les colonnes qui nous intéressent
+    relevant_columns = ["code_uic", "libelle", "fret", "code_ligne", "geometry"]
+    gares_processed_df = gares_processed_df[relevant_columns].copy() # On garde une copie pour éviter de modifier l'original
+    
+    return gares_processed_df
