@@ -1,0 +1,9 @@
+ipykernel
+notebook
+jupyter
+numpy
+pandas
+geopandas
+folium
+branca
+plotly
