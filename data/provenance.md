@@ -8,7 +8,7 @@ Les données utilisées dans ce projet proviennent des ressources de la SNCF. On
 - [Vitesse maximale nominale sur ligne (GeoJSON)](https://data.sncf.com/explore/dataset/vitesse-maximale-nominale-sur-ligne/information/)
 - [Liste des Gares (GeoJSON)](https://ressources.data.sncf.com/explore/dataset/liste-des-gares/information/)
 - [Population des communes Françaises (CSV)](https://perso.esiee.fr/~courivad/python_advanced/chapters/02-geo.html)
-- [Liste des commmunes Françaises](https://www.data.gouv.fr/fr/datasets/communes-france-1/)
+- [Communes de France - Base des codes postaux (CSV)](https://www.data.gouv.fr/fr/datasets/communes-france-1/)
 
 - Liens pour télécharger les datasets:
   - <https://ressources.data.sncf.com/api/explore/v2.1/catalog/datasets/formes-des-lignes-du-rfn/exports/geojson?lang=fr&timezone=Europe%2FParis>
@@ -17,4 +17,4 @@ Les données utilisées dans ce projet proviennent des ressources de la SNCF. On
   - <https://data.sncf.com/api/explore/v2.1/catalog/datasets/vitesse-maximale-nominale-sur-ligne/exports/geojson?lang=fr&timezone=Europe%2FParis>
   - <https://ressources.data.sncf.com/api/explore/v2.1/catalog/datasets/liste-des-gares/exports/geojson?lang=fr&timezone=Europe%2FParis>
   - <https://perso.esiee.fr/~courivad/python_advanced/_downloads/3d76da69e8dbedf75393a25c8a9f3dff/insee-pop-communes.csv>
-  - <https://www.data.gouv.fr/fr/datasets/r/897f2d37-99f8-4dc7-94be-7a4be9351bad>
+  - <https://www.data.gouv.fr/fr/datasets/r/dbe8a621-a9c4-4bc3-9cae-be1699c5ff25>
