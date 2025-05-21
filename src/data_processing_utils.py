@@ -167,19 +167,20 @@ def treat_and_merge_communes_population(communes_df,population_df):
     Returns:
         pd.DataFrame: Dataframe traitée.
     """
-    # Communes
-    communes_relevant_columns = ['Nom Officiel Région', 'Code Officiel Département', 'Nom Officiel Région', 'Nom Officiel Département', 'Code Officiel Commune', 'Nom Officiel Commune', "Nom Officiel Arrondissement départemental", 'Statut Commune UU2020']
-    communes_treated = communes_df.query("Année == 2024")
-    communes_treated = communes_treated[communes_relevant_columns]
-    communes_treated = communes_treated.rename(columns={'Nom Officiel Région':'Région','Code Officiel Département':'Code Département','Nom Officiel Région':'Région','Nom Officiel Département':'Département','Nom Officiel Commune':'Commune','Nom Officiel Arrondissement départemental':'Aire Urbaine','Statut Commune UU2020':'Statut Commune'})
-    # Population
-    population_relervant_columns = ['DEPCOM', 'PTOT']
-    population_treated = population_df[population_relervant_columns]
-    population_treated = population_treated.rename(columns={'DEPCOM':'Code Officiel Commune'})
+    communes_df = communes_df.copy()
+    population_df = population_df.copy()
     
-    merged_df = pd.merge(communes_treated,population_treated,on='Code Officiel Commune')
+    population_df = population_df.rename(columns={"DEPCOM" : "code_commune_INSEE"})
     
-    return merged_df
+    communes_df["code_commune_INSEE"] = communes_df["code_commune_INSEE"].astype(str).str.zfill(5) # On s'assure que le code commune est bien au format 5 chiffres
+    
+    communes_population_df = communes_df.merge(population_df, how="left", on="code_commune_INSEE")
+    
+    relevant_columns = ["code_commune_INSEE", "nom_commune", "code_postal", "code_departement", "nom_departement", "nom_region", "PTOT"]
+    
+    communes_population_df = communes_population_df[relevant_columns].copy() # On garde une copie pour éviter de modifier l'original
+    
+    return communes_population_df
 
 def merge_gares_communes(gares_frequentations_df: gpd.GeoDataFrame, communes_population_df: pd.DataFrame) -> gpd.GeoDataFrame:
     """

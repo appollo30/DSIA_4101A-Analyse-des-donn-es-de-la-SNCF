@@ -24,7 +24,7 @@
         "url": "https://perso.esiee.fr/~courivad/python_advanced/_downloads/3d76da69e8dbedf75393a25c8a9f3dff/insee-pop-communes.csv"
     },
     {
-        "name": "communes-france.csv",
-        "url": "https://www.data.gouv.fr/fr/datasets/r/897f2d37-99f8-4dc7-94be-7a4be9351bad"
+        "name": "20230823-communes-departement-region.csv",
+        "url": "https://www.data.gouv.fr/fr/datasets/r/dbe8a621-a9c4-4bc3-9cae-be1699c5ff25"
     }
 ]

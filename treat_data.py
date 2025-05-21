@@ -28,20 +28,16 @@ def main():
     processed_frequentations.to_csv("data/processed/frequentations.csv", index=False)
     
     # 5_liste_gares.ipynb
-    gares = gpd.read_file('../data/raw/liste-des-gares.geojson')
+    gares = gpd.read_file('data/raw/liste-des-gares.geojson')
     processed_gares = data_utils.process_gares(gares)
     processed_gares.to_csv("data/processed/gares.csv", index=False)
     
     # 6_merge_gares_frequentation.ipynb
-    communes = pd.read_csv('../data/raw/20230823-communes-departement-region.csv')
-    population = pd.read_csv('../data/raw/insee-pop-communes.csv', sep=';')
+    communes = pd.read_csv('data/raw/20230823-communes-departement-region.csv')
+    population = pd.read_csv('data/raw/insee-pop-communes.csv', sep=';')
     
     communes_population = data_utils.treat_and_merge_communes_population(communes, population)
     communes_population.to_csv("data/processed/communes_population.csv", index=False)
-    
-    
-    
-    
     
 if __name__ == "__main__":
     main()
