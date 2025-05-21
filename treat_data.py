@@ -39,5 +39,17 @@ def main():
     communes_population = data_utils.treat_and_merge_communes_population(communes, population)
     communes_population.to_csv("data/processed/communes_population.csv", index=False)
     
+    gares_frequentations = data_utils.merge_gares_frequentations(processed_gares, processed_frequentations)
+    gares_frequentations.to_csv("data/processed/gares_frequentations.csv", index=False)
+    
+    gares_communes = data_utils.merge_gares_communes(gares_frequentations, communes_population)
+    gares_communes.to_csv("data/processed/gares_communes.csv", index=False)
+    
+    # 7_emissions-co2.ipynb
+    emissions = pd.read_csv("data/raw/emission-co2-perimetre-complet.csv", sep=';')
+    emissions_processed = data_utils.process_emissions(emissions)
+    emissions_processed.to_csv("data/processed/emissions.csv", index=False)
+    
+    
 if __name__ == "__main__":
     main()

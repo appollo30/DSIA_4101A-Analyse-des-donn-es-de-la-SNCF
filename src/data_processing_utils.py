@@ -107,6 +107,8 @@ def process_frequentations(frequentations_df : pd.DataFrame) -> pd.DataFrame:
         year_df = year_df.rename(columns={f"Total Voyageurs {year}":"Total Voyageurs", f"Total Voyageurs + Non voyageurs {year}":"Total Voyageurs + Non Voyageurs"})
         frequentations_df_processed = pd.concat([frequentations_df_processed, year_df])
     frequentations_df_processed = frequentations_df_processed.sort_values(by=["Nom de la gare", "Année"]) # On trie par nom de gare et année pour avoir un affichage plus lisible
+    frequentations_df_processed = frequentations_df_processed.rename(columns={"Code UIC":"code_uic"}) # On renomme la colonne "Code UIC" en "code_uic" pour correspondre à liste-des-gares.geojson
+    frequentations_df_processed["Code postal"] = frequentations_df_processed["Code postal"].astype(str) # On convertit le code postal en chaîne de caractères pour éviter les problèmes de formatage
     frequentations_df_processed = frequentations_df_processed.drop(columns=["Nom de la gare"])
     frequentations_df_processed = frequentations_df_processed.reset_index(drop=True)
     return frequentations_df_processed
@@ -132,7 +134,7 @@ def process_gares(gares_df : pd.DataFrame) -> pd.DataFrame:
     relevant_columns = ["code_uic", "libelle", "fret", "code_ligne", "geometry"]
     gares_processed_df = gares_processed_df[relevant_columns].copy() # On garde une copie pour éviter de modifier l'original
     gares_processed_df = gares_processed_df.drop_duplicates(subset=["code_uic"]) # On supprime les doublons sur le code UIC, car il y a parfois plusieurs lignes pour une même gare
-    
+    gares_processed_df["code_uic"] = gares_processed_df["code_uic"].astype("Int64") # On convertit le code UIC en entier pour éviter les problèmes de type
     return gares_processed_df
 
 def merge_gares_frequentations(gares_df : pd.DataFrame, frequentations_df : pd.DataFrame) -> gpd.GeoDataFrame:
@@ -197,3 +199,20 @@ def merge_gares_communes(gares_frequentations_df: gpd.GeoDataFrame, communes_pop
     merged_df = gares_frequentations_df.merge(communes_population_df, on="code_postal", how="left")
     merged_df = merged_df.drop_duplicates(subset=["code_uic", "Année"])
     return merged_df
+
+def process_emissions(emissions_df: pd.DataFrame) -> pd.DataFrame:
+    emissions_processed_df = emissions_df.copy()
+    emissions_processed_df = emissions_processed_df.rename(columns={
+        'Distance entre les gares':'Distance', 
+        "Train - Empreinte carbone (kgCO2e)":"Train", 
+        "Autocar longue distance - Empreinte carbone (kgCO2e)": "Autocar", 
+        "Avion - Empreinte carbone (kgCO2e)":"Avion", 
+        "Voiture électrique (2,2 pers.) - Empreinte carbone (kgCO2e)":"Voiture électrique", 
+        "Voiture thermique (2,2 pers.) - Empreinte carbone (kgCO2e)":"Voiture thermique"
+    })
+    
+    emissions_processed_df = emissions_processed_df.query("Transporteur != 'International'")
+    # Ici la colonne Transporteur peut valoir "International", "TGV", "TER", "Intercités".
+    # On ne s'intéresse qu'aux trains SNCF.
+    
+    return emissions_processed_df
