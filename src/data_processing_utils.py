@@ -110,6 +110,7 @@ def process_frequentations(frequentations_df : pd.DataFrame) -> pd.DataFrame:
     frequentations_df_processed = frequentations_df_processed.rename(columns={"Code UIC":"code_uic"}) # On renomme la colonne "Code UIC" en "code_uic" pour correspondre à liste-des-gares.geojson
     frequentations_df_processed["Code postal"] = frequentations_df_processed["Code postal"].astype(str) # On convertit le code postal en chaîne de caractères pour éviter les problèmes de formatage
     frequentations_df_processed = frequentations_df_processed.drop(columns=["Nom de la gare"])
+    frequentations_df_processed["Année"] = frequentations_df_processed["Année"].astype("Int64") # On convertit l'année en chaîne de caractères pour éviter les problèmes de formatage
     frequentations_df_processed = frequentations_df_processed.reset_index(drop=True)
     return frequentations_df_processed
 
