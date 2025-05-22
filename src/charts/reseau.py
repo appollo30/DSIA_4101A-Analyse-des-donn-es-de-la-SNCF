@@ -155,31 +155,70 @@ def generate_widget(shapes_speeds_df : pd.DataFrame, gares_frequentations : pd.D
     map_html = map_fig.get_root().render()
     
     histogram = generate_histogram(shapes_speeds_df)
+    min_speed = shapes_speeds_df['v_max'].min()
+    max_speed = shapes_speeds_df['v_max'].max()
     
     scatterplot = generate_scatterplot(gares_frequentations)
     piechart = generate_piechart(gares_frequentations)
-    
+
     div = html.Div([
+        dcc.Markdown('''
+        ## Réseau ferroviaire Français
         
-        dcc.Graph(
-            id='scatterplot',
-            figure=scatterplot,
-            style={'height': '50vh'}
+        On peut tout d'abord visualiser la distribution des limitations de vitesse sur tous les tronçons de lignes de train en France via l'histogramme.
+        '''
         ),
+        html.Div([
+            dcc.Graph(
+                id='reseau_histogram',
+                figure=histogram,
+            ),
+            dcc.RangeSlider(
+                id='reseau_slider',
+                min=min_speed,
+                max=max_speed,
+                value=[min_speed, max_speed],
+                step=25
+            ),
+        ]),
+        dcc.Markdown('''
+        On constate que la majorité des tronçons de lignes sont à faible vitesse (< 150 km/h).
+        Il est important de noter que le nombre de tronçons de lignes à grande vitesse est très faible, mais qu'ils représentent la moitié du réseau ferroviaire français, car ils sont plus longs que les tronçons lents.
+        On peut le voir en regardant la carte ci-dessous en jouant avec les boutons radio.
+                     
+        On peut également visualiser la carte du réseau ferroviaire français, avec les gares les plus fréquentées (> 5 millions de voyageurs en 2023) et la vitesse maximale sur chaque tronçon de ligne.
+        Pour des raisons de clareté, on ne montre pas les gares de l'île de France, qui sont de loin les plus fréquentées (voir le scatterplot ci-dessous).
+        '''),
+        html.Div([
+            dcc.RadioItems(
+                id="reseau_radio",
+                options=["Lignes à faible vitesse (< 100 km/h)", "Lignes à grande vitesse (> 100 km/h)", "Réseau complet"],
+                value="Lignes à grande vitesse (> 100 km/h)",
+            ),
+            html.Iframe(
+                id='reseau_map',
+                srcDoc=map_html,
+                style={'width': '100%', 'height': '600px'}
+            ),
+        ]),
+        dcc.Markdown('''
+        On remarque que la zone où le réseau est le plus dense est l'Île-de-France, car Paris est le hub de transport français (il n'existe pas de ligne TGV directe entre Montpellier et Marseille par exemple).
+        Les zones où le réseau est le moins exploité par les TGV sont le Massif Central, les Pyrénnées, et le Grand Est.
+        
+        Le statut de hub de transport de Paris est également visible sur le pie
+        chart ci-dessous, qui montre la répartition en nombre de voyageurs des gares à forte affluence (> 5M voyageurs) par région en 2023.
+        '''),
         dcc.Graph(
-            id='piechart',
+            id='reseau_piechart',
             figure=piechart,
-            style={'height': '50vh'}
         ),
-        # dcc.Graph(
-        #     id='histogram',
-        #     figure=histogram,
-        #     style={'height': '100vh'}
-        # ),
-        # html.Iframe(
-        #     id='map',
-        #     srcDoc=map_html,
-        #     style={'width': '100%', 'height': '600px'}
-        # )
+        dcc.Graph(
+            id='reseau_scatterplot',
+            figure=scatterplot,
+        ),
+        dcc.Markdown('''
+        On peut directement identifier les 4 plus grandes gares de France, qui sont Paris Gare de Lyon, Paris Montparnasse, Paris Saint-Lazare et Paris Gare du Nord.
+        Paris donine donc largement le réseau ferroviaire français, et la plupart des gares à fort trafic sont situées en Île-de-France.
+        '''),
     ])
     return div
