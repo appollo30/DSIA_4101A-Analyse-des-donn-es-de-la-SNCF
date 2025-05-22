@@ -3,6 +3,9 @@ import geopandas as gpd
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 import plotly.express as px
+import dash
+from dash import dcc
+from dash import html
 
 color_palette = ["#af2bbf","#8770bf","#6c91bf","#5fb0b7","#5bc8af"] # Palette de couleurs pour les barres
     
@@ -130,3 +133,37 @@ def generate_bar_chart(emissions_df: pd.DataFrame) -> go.Figure:
     )
     
     return fig
+
+def generate_widget(emissions_df: pd.DataFrame) -> dcc.Graph:
+    layout = html.Div([
+        dcc.Markdown('''
+        ## Émissions de CO2 par moyen de transport
+        
+        On cherche à comparer les émissions de CO2 pour chaque moyen de transport en fonction 
+        de la distance parcourue. On peut voir le détail des émissions selon le trajet et le moyen de transport.
+        '''),
+        dcc.Graph(
+            id='emissions-graph',
+            figure=generate_line_chart(emissions_df)
+        ),
+        dcc.Markdown('''
+        On constate que le train est le moyen de transport le plus écologique, et que la distance n'est pas le seul
+        facteur à prendre en compre pour l'avion notamment. En effet la relation entre la distance et les émissions de CO2
+        pour l'avion n'est pas linéaire.
+        
+        On peut aussi essayer de comparer les émissions moyennes par km pour chaque moyen de transport.
+        '''),
+        dcc.Graph(
+            id='emissions-bar-graph',
+            figure=generate_bar_chart(emissions_df)
+        ),
+        dcc.Markdown('''
+        Ici, le train est de loin le moyen de transport le plus écologique, suivi par l'autocar et la voiture électrique.
+        La voiture thermique et l'avion sont les moyens de transport les plus polluants.
+        On peut également voir que selon le type de train que l'on prend, les émissions de CO2 peuvent varier.
+        Le TGV est entièrement électrique, et donc beaucoup moins polluant que le TER ou l'intercité, qui sont moins propres à 
+        cause des locomotives diesels sur les lignes non électrifiées ainsi que des bus qui font partie de l’offre TER.
+        ''')
+    ])
+    
+    return layout

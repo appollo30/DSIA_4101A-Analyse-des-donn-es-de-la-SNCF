@@ -1,4 +1,4 @@
-from src.charts.emissions import generate_line_chart, generate_bar_chart
+from src.charts.emissions import generate_widget
 
 import pandas as pd
 import dash
@@ -14,14 +14,7 @@ def main():
     app = dash.Dash(__name__)
     
     app.layout = html.Div([
-        dcc.Graph(
-            id='emissions-graph',
-            figure=generate_line_chart(emissions_df)
-        ),
-        dcc.Graph(
-            id='emissions-bar-graph',
-            figure=generate_bar_chart(emissions_df)
-        ),
+        generate_widget(emissions_df),
     ])
     
     app.run_server(debug=True)
