@@ -69,7 +69,7 @@ def main():
         return fig
     
     @app.callback(
-        Output("reseau_map", "srcDoc"),
+        Output("reseau_map", "sr"),
         [Input("reseau_radio", "value")],
     )
     def update_map(selected_option):

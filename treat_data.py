@@ -15,8 +15,8 @@ def main():
     processed_shapes = data_utils.process_shapes(shapes)
     processed_speeds = data_utils.process_speeds(speeds)
     
-    processed_shapes.to_file("data/processed/shapes.geojson", driver="GeoJSON")
-    processed_speeds.to_file("data/processed/speeds.geojson", driver="GeoJSON")
+    # processed_shapes.to_file("data/processed/shapes.geojson", driver="GeoJSON")
+    # processed_speeds.to_file("data/processed/speeds.geojson", driver="GeoJSON")
     
     # 3_merge_shapes_speeds.ipynb
     shapes_speeds = data_utils.merge_shapes_speeds(processed_shapes, processed_speeds)
@@ -25,22 +25,22 @@ def main():
     # 4_frequentation_gares.ipynb
     frequentations = pd.read_csv('data/raw/frequentation-gares.csv', sep=';')
     processed_frequentations = data_utils.process_frequentations(frequentations)
-    processed_frequentations.to_csv("data/processed/frequentations.csv", index=False)
+    # processed_frequentations.to_csv("data/processed/frequentations.csv", index=False)
     
     # 5_liste_gares.ipynb
     gares = gpd.read_file('data/raw/liste-des-gares.geojson')
     processed_gares = data_utils.process_gares(gares)
-    processed_gares.to_file("data/processed/gares.geojson", driver="GeoJSON")
+    # processed_gares.to_file("data/processed/gares.geojson", driver="GeoJSON")
     
     # 6_merge_gares_frequentation.ipynb
     communes = pd.read_csv('data/raw/20230823-communes-departement-region.csv')
     population = pd.read_csv('data/raw/insee-pop-communes.csv', sep=';')
     
     communes_population = data_utils.treat_and_merge_communes_population(communes, population)
-    communes_population.to_csv("data/processed/communes_population.csv", index=False)
+    # communes_population.to_csv("data/processed/communes_population.csv", index=False)
     
     gares_frequentations = data_utils.merge_gares_frequentations(processed_gares, processed_frequentations)
-    gares_frequentations.to_file("data/processed/gares_frequentations.geojson", driver="GeoJSON")
+    # gares_frequentations.to_file("data/processed/gares_frequentations.geojson", driver="GeoJSON")
     
     gares_communes = data_utils.merge_gares_communes(gares_frequentations, communes_population)
     gares_communes.to_file("data/processed/gares_communes.geojson", driver="GeoJSON")
