@@ -1,2 +1,4 @@
 data/raw/communes-france.csv filter=lfs diff=lfs merge=lfs -text
 notebooks/3_merge_shapes_speeds.ipynb filter=lfs diff=lfs merge=lfs -text
+*.csv filter=lfs diff=lfs merge=lfs -text
+*.ipynb filter=lfs diff=lfs merge=lfs -text
