@@ -131,28 +131,39 @@ Le dashboard est divisé en 3 onglets :
 L'onglet "Réseau ferroviaire" fournit une analyse détaillée du réseau ferroviaire français. Voici les principales conclusions :
 
 1. **Distribution des limitations de vitesse** :
-   - La majorité des tronçons de lignes sont à faible vitesse (< 150 km/h).
-   - Les tronçons à grande vitesse, bien que moins nombreux, représentent une part significative du réseau ferroviaire français en termes de longueur.
+    - Il s'agit d'un histogramme qui montre la distribution des limitations de vitesse sur les lignes du réseau ferré national. Il permet de visualiser les vitesses maximales autorisées sur les différentes lignes.
+   
+   On peut conclure que la majorité des lignes ont une vitesse inférieure à 160 km/h par rapport au reste. Mais cette conclusion est à nuancer, car le fait que la majorité des lignes ont une vitesse inférieure à 160 km/h ne signifie pas que la majorité du réseau est à cette vitesse. En effet, on ne prend pas en compte la longueur des lignes.
 
 2. **Carte du réseau ferroviaire** :
    - La carte montre les lignes de train et la vitesse maximale sur chaque tronçon, ainsi que les gares les plus fréquentées (> 5 millions de voyageurs en 2023).
-   - La région Île-de-France est la zone où le réseau est le plus dense, confirmant le statut de Paris en tant que hub de transport français.
-   - Les zones où le réseau est le moins exploité par les TGV sont le Massif Central, les Pyrénées, et le Grand Est.
+  
+   On constate que les gares les plus fréquentées hors Paris sont Lyon Part-Dieu, Strasbourg-Ville, Lille-Flangres. Il s'agit de gares intermédiaires sur les lignes à grande vitesse (LGV) qui relient Paris aux grandes villes de province, ainsi qu'aux grandes lignes internationales.
+  Les zones où le réseau est le moins exploité par les TGV sont le Massif Central, les Pyrénées, et le Grand Est.
 
 3. **Répartition des gares à forte affluence** :
-   - Le pie chart montre que la majorité des gares à forte affluence (> 5M voyageurs) sont situées en Île-de-France, avec Paris Gare de Lyon, Paris Montparnasse, Paris Saint-Lazare et Paris Gare du Nord étant les plus grandes gares de France.
+   - Un pie chart montre la répartition des gares les plus fréquentées en France en 2023 (> 5 M de voyageurs).
+
+    On constate que l'Île-de-France concentre la majorité des gares les plus fréquentées, avec 83% des gares les plus fréquentées.
+
+4. **Fréquentation en fonction de la population** :
+   - Un scatterplot montre la relation entre la population des communes et la fréquentation des gares en 2023.
+
+    On constate que malgré le fait qu'elles soient en moyenne moins peuplées, les gares de l'Île-de-France sont les plus fréquentées. On peut aussi constater que les gares des grandes villes de province sont également très fréquentées, malgré une population moins importante que celle de l'Île-de-France.
 
 ### COVID-19
 
-L'onglet "COVID-19" analyse l'impact de la pandémie sur le nombre de voyageurs :
+L'onglet "Évolution du nombre de voyageurs" fournit une analyse de l'évolution du nombre de voyageurs dans les gares françaises entre 2015 et 2023.
 
 1. **Évolution du nombre de voyageurs** :
-   - La région Île-de-France est de loin la plus fréquentée, suivie par Auvergne-Rhône-Alpes et les Hauts de France.
-   - Une baisse significative du nombre de voyageurs en 2020 est observable, probablement due à la pandémie de COVID-19.
+   - Un line chart montre l'évolution du nombre de voyageurs dans les gares françaises entre 2015 et 2023, par région.
+
+    On constate toujours que l'Île-de-France est la région la plus fréquentée ; On constate également que toutes les régions ont connu une baisse nette de fréquentation entre 2019 et 2020, due à la pandémie de COVID-19. La fréquentation a ensuite progressivement augmenté jusqu'en 2023. Certaines région ont plus souffert que d'autres de la pandémie.
 
 2. **Impact du COVID-19 par région** :
-   - La région Île-de-France est la plus impactée par la pandémie, avec plus de 50% de perte de voyageurs entre 2019 et 2020.
-   - Cela témoigne de l'importance de l'Île-de-France dans le réseau ferroviaire français en tant que hub de transport.
+   - Un bar chart montre les pertes relatives de voyageurs entre 2019 et 2020 par région. 
+
+    On constate que la région Ile de France a perdu nettement plus de voyageurs proportionnellement que les autres régions. C'est dû à la nature de hub central de la région Île-de-France, et plus particulièrement des gares parisionnes, qui sont des points de passage obligatoires pour les voyageurs qui se déplacent en train entre les régions de province.
 
 ### Émissions de CO2
 
