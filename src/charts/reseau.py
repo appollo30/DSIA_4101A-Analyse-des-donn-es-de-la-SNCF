@@ -119,7 +119,7 @@ def generate_scatterplot(gares_communes: pd.DataFrame) -> go.Figure:
         hover_name="libelle",
         color="nom_region",
         labels={
-            "PTOT": "Population totale (PTOT)",
+            "PTOT": "Population totale de la commune",
             "Total Voyageurs": "Total Voyageurs",
             "nom_region": "Région"
         },
